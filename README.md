@@ -61,3 +61,11 @@ async def test_search():
 
 asyncio.run(test_search())
 ```
+
+## 🧠 Inspiration & Attribution
+
+This project, `brave-mcp-langchain`, was inspired by and partially based on the excellent work in [`duckduckgo-mcp-server`](https://github.com/nickclyde/duckduckgo-mcp-server) by [@nickclyde](https://github.com/nickclyde). That project laid the groundwork for integrating DuckDuckGo search and content fetching into the MCP ecosystem.
+
+While `brave-mcp-langchain` extends the concept to support Brave Search and LangChain workflows, several architectural ideas and implementation patterns were adapted from `duckduckgo-mcp-server`, which is licensed under the [MIT License](https://github.com/nickclyde/duckduckgo-mcp-server/blob/main/LICENSE).
+
+I'm grateful for the open-source community and contributors who make projects like this possible. If you’re interested in DuckDuckGo-based search tools, definitely check out the original repository!
