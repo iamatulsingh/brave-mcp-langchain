@@ -1,4 +1,4 @@
-# Local test
+# brave-mcp-langchain
 
 ## Create venv
 ```bash
