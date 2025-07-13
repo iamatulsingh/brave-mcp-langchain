@@ -2,8 +2,7 @@ from typing import Optional
 import traceback
 from langchain.tools import StructuredTool
 from langchain_core.tools import tool
-from pydantic import BaseModel
-from pydantic import Field
+from pydantic import BaseModel, Field, model_validator
 
 from brave_mcp_langchain.helper import searcher, fetcher
 
@@ -12,12 +11,19 @@ class SearchInput(BaseModel):
     query: str = Field(description="A query to perform a web search")
     max_results: Optional[int] = Field(default=10, description="Max result limit for the search")
 
+    @model_validator(mode="before")
+    @classmethod
+    def set_default_max_results(cls, values):
+        if isinstance(values, dict) and values.get("max_results") is None:
+            values["max_results"] = 10
+        return values
+
 
 class FetchContentInput(BaseModel):
     url: str = Field(description="URL to get content of")
 
 
-async def search(query: str, max_results: int = 10) -> str:
+async def search(query: str, max_results: Optional[int] = None) -> str:
     """
     Search Brave and return formatted results.
 

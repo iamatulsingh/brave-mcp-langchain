@@ -42,7 +42,7 @@ uvx brave-mcp-langchain sse 5003
 
 # Use as Langchain tool
 
-It can also be used as Langchain tool. Try below code to try
+It can also be used as Langchain tool. Below is how to validate tool.
 
 ```python
 import httpx
@@ -60,6 +60,38 @@ async def test_search():
     print(result)
 
 asyncio.run(test_search())
+```
+
+## Use with langchain example
+```python
+import asyncio
+from langchain.agents import initialize_agent
+from langchain.agents.agent_types import AgentType
+from langchain_ollama import ChatOllama
+from brave_mcp_langchain import brave_tool
+
+llm = ChatOllama(model="llama3.1:8b")
+
+tools = [
+    brave_tool.search_tool,
+    brave_tool.fetch_content_tool
+]
+
+agent = initialize_agent(
+    tools=[brave_tool.search_tool, brave_tool.fetch_content_tool],
+    llm=llm,
+    agent=AgentType.STRUCTURED_CHAT_ZERO_SHOT_REACT_DESCRIPTION,
+    verbose=True
+)
+
+async def run_agent_query():
+    response = await agent.ainvoke(
+        "Search for 'iamatulsingh' overview, then fetch content from https://iamatulsingh.github.io"
+    )
+    print("\nAgent Response:")
+    print(response)
+
+asyncio.run(run_agent_query())
 ```
 
 ## 🧠 Inspiration & Attribution
